@@ -1,0 +1,49 @@
+version: "3.3"
+
+services:
+ nordea-prometheus:
+   container_name: prometheus
+   image: prom/prometheus:v2.42.0
+   ports:
+     - "9090:9090"
+   networks:
+     - nordea-network
+   volumes:
+     - ./prometheus.yml:/etc/prometheus/prometheus.yml
+ nordea-grafana:
+   image: grafana/grafana
+   container_name: grafana
+   restart: always
+   ports:
+     - 3000:3000
+   networks:
+     - nordea-network
+   volumes:
+     - grafana-volume:/var/lib/grafana
+ nordea-graphite:
+   image: graphiteapp/graphite-statsd
+   container_name: graphite
+   restart: always
+   ports:
+     - 8125:8125/udp
+   networks:
+     - nordea-network
+ nordea-mysql:
+   image: mysql/mysql-server
+   container_name: mysql
+   restart: always
+   ports:
+     - 3306:3306
+   networks:
+     - nordea-network
+   environment:
+     MYSQL_ROOT_PASSWORD: root
+     MYSQL_DATABASE: 'grafana-test'
+     MYSQL_ROOT_HOST: '%'
+
+
+networks:
+ nordea-network:
+
+volumes:
+ grafana-volume:
