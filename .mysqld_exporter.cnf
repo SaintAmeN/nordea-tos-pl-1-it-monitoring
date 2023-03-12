@@ -1,0 +1,4 @@
+# ten plik powinien się znaleźć w lokalizacji: /etc/.mysqld_exporter.cnf
+[client]
+user=root
+password=root
