@@ -8,8 +8,19 @@ scrape_configs:
   - job_name: 'Odpytywacz Windows'
     static_configs:
       - targets: [ '192.168.100.120:9182' ]
-  - job_name: 'Odpytywacz Linux'
+  - job_name: 'Odpytywacz Linux - MySQL'
     static_configs:
       - targets: ['192.168.100.120:9104']
         labels:
-          alias: odpytywacz
+          alias: odpytywacz-mysql
+  - job_name: 'Odpytywacz Linux - Mongo'
+    static_configs:
+      - targets: ['192.168.100.120:9001']
+        labels:
+          alias: odpytywacz-mongo
+  - job_name: 'Odpytywacz Linux - Python App'
+    scrape_interval: 1s
+    static_configs:
+      - targets: ['192.168.100.120:5000']
+        labels:
+          alias: odpytywacz-python-app

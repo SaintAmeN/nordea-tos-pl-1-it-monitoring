@@ -40,7 +40,29 @@ services:
      MYSQL_ROOT_PASSWORD: root
      MYSQL_DATABASE: 'grafana-test'
      MYSQL_ROOT_HOST: '%'
-
+ nordea-splunk:
+   image: splunk/splunk:latest
+   container_name: splunk
+   restart: always
+   ports:
+     - 8000:8000
+   networks:
+     - nordea-network
+   environment:
+     SPLUNK_START_ARGS: '--accept-license'
+     SPLUNK_PASSWORD: 'password'
+ nordea-mongo:
+   image: mongo:4.4.2
+   container_name: mongo
+   restart: always
+   ports:
+     - 27017:27017
+   networks:
+     - nordea-network
+   environment:
+      MONGO_INITDB_DATABASE: 'grafana-test'
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
 
 networks:
  nordea-network:
